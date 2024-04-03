@@ -8,15 +8,17 @@ from app.core.db import db
 
 @pytest.fixture
 def app() -> Flask:
-  app = create_app({
-    "TESTING": True,
-    "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
-  })
+    app = create_app(
+        {
+            "TESTING": True,
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+        }
+    )
 
-  with app.app_context():
-     db.create_all()
-     yield app
-     db.drop_all()
+    with app.app_context():
+        db.create_all()
+        yield app
+        db.drop_all()
 
 
 @pytest.fixture
@@ -26,5 +28,5 @@ def client(app: Flask) -> FlaskClient:
 
 @pytest.fixture
 def session(app: Flask) -> Session:
-   with app.app_context():
-      yield db.session
+    with app.app_context():
+        yield db.session

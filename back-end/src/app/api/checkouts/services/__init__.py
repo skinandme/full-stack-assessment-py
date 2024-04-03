@@ -2,6 +2,6 @@ from app.api.checkouts.services.checkout_items_service import CheckoutItemsServi
 from app.api.checkouts.services.checkouts_service import CheckoutsService
 
 __all__ = [
-  CheckoutsService,
-  CheckoutItemsService,
+    CheckoutsService,
+    CheckoutItemsService,
 ]

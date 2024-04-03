@@ -9,23 +9,26 @@ from app.api.checkouts.models.checkout_item import CheckoutItem
 @pytest.fixture
 def product() -> Product:
     return Product(
-      sku="NIACINAMIDE_NIGHT_CREAM",
-      name="Niacinamide-powered night cream",
-      unit_price=2000,
-      currency="GBP",
+        sku="NIACINAMIDE_NIGHT_CREAM",
+        name="Niacinamide-powered night cream",
+        unit_price=2000,
+        currency="GBP",
     )
+
 
 @pytest.fixture
 def checkout() -> Checkout:
     return Checkout(currency="GBP")
 
+
 def test_get_or_404_checkout(client: FlaskClient):
     # Act
-    res = client.get('/checkouts/100000')
+    res = client.get("/checkouts/100000")
 
     # Assert
     assert res.status_code == 404
     assert res.json["error"]["message"] == "Checkout not found"
+
 
 def test_get_empty_checkout(client: FlaskClient, session: Session, checkout: Checkout):
     # Arrange
@@ -43,15 +46,13 @@ def test_get_empty_checkout(client: FlaskClient, session: Session, checkout: Che
     assert res.json["sub_total"] == 0
 
 
-def test_get_checkout_with_items(client: FlaskClient, session: Session, product: Product, checkout: Checkout):
+def test_get_checkout_with_items(
+    client: FlaskClient, session: Session, product: Product, checkout: Checkout
+):
     # Arrange
     session.add(product)
     session.add(checkout)
-    checkout_item = CheckoutItem(
-        product=product,
-        checkout=checkout,
-        quantity=2
-    )
+    checkout_item = CheckoutItem(product=product, checkout=checkout, quantity=2)
     session.add(checkout_item)
     session.commit()
 
@@ -76,9 +77,7 @@ def test_get_checkout_with_items(client: FlaskClient, session: Session, product:
 
 def test_create_checkout(client: FlaskClient):
     # Act
-    res = client.post("/checkouts", json={
-        "currency": "GBP"
-    })
+    res = client.post("/checkouts", json={"currency": "GBP"})
 
     # Assert
     assert res.status_code == 201
