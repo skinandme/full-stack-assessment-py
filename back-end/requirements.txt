@@ -8,7 +8,7 @@ iniconfig==1.1.1
 itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
-packaging==21.0
+packaging==22.0
 pluggy==1.0.0
 py==1.10.0
 pyparsing==2.4.7
@@ -18,3 +18,4 @@ six==1.16.0
 SQLAlchemy==1.4.25
 toml==0.10.2
 Werkzeug==2.0.1
+black==24.3.0

@@ -4,8 +4,8 @@ from app.api.checkouts.views.checkout_items_index_view import CheckoutItemsIndex
 from app.api.checkouts.views.checkout_items_view import CheckoutItemsView
 
 __all__ = [
-  CheckoutsIndexView,
-  CheckoutsView,
-  CheckoutItemsIndexView,
-  CheckoutItemsView,
+    CheckoutsIndexView,
+    CheckoutsView,
+    CheckoutItemsIndexView,
+    CheckoutItemsView,
 ]
