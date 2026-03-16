@@ -1,23 +1,43 @@
-# Skin + Me - Full-Stack Tech Assessment
+# Skin + Me — Full-Stack Technical Assessment
 
-### Scenario
+## Context
 
-We have recently launched a new online shop and it has been performing well. Our growth team came up with the following new idea we think will delight our customers and help us grow as a business.
+You are joining a team that has been building an online checkout system. A previous developer started implementing a discount code feature but moved to another project before completing it. Your job is to pick up where they left off.
 
-### Hypothesis
+The codebase includes a working checkout API (Flask/Python) and a checkout frontend (React/TypeScript). A partial discount system has been added to the backend with some frontend scaffolding.
 
-> Offering discounts will encourage people to try new products when they order.
+**The existing implementation is incomplete and may contain bugs.** You are expected to find and fix issues as well as complete the remaining features.
 
-We want to **test this idea quickly and improve it one step at a time**.
+## Your Tasks
 
-You are the engineering lead for this project.
+Your task is outlined below.
 
-## Introducing the Discounts System Epic
+### Code Review + Bug Fixes + Feature Completion (~4-5 hours)
 
-In the kickoff workshop, we worked with the Product Manager to define the vision for our discount system. This gives an overview of the full range of discount features we might want to build in the future.
+The discount system has some issues and missing pieces. This task combines a code review, bug fixes, and feature completion.
 
-> [!IMPORTANT]
-> You are not expected to build these features as part of your technical test! They provide context for the feature and simulate a real-world set of requirements. As you design your solution, think about how your system could support these needs.
+**Code review:** A specific commit has been made to this repository containing the initial implementation of the discount system. Review that commit as you would a real PR — the commit ID is provided separately.
+
+Fill in `REVIEW.md` at the repository root with your feedback. Reference file paths and line numbers to identify issues. For each issue you identify, explain:
+
+- What the problem is
+- Why it matters
+- How you would fix it
+
+**Bug fixes:** The existing discount implementation has bugs. Find them and fix them. Write tests that demonstrate the bugs and verify your fixes.
+
+**Feature completion:**
+
+- Complete the "remove discount" endpoint (currently returns 501)
+- Wire up the frontend discount component to the API
+- Display discount feedback (success/error messages) to the user
+- Ensure discounts are reflected in the checkout totals on the frontend
+
+See the **Discount System** section below for business rules your implementation must respect.
+
+---
+
+## Discount System
 
 ### Constraints
 
@@ -27,14 +47,20 @@ The following is a list of general rules and business logic that you will need t
 - Discount codes MUST be unique.
 - Applying a discount SHOULD never allow a customer's order to have a negative balance.
 - Customers SHOULD only be allowed to use one discount at a time.
-- Changing a discount code SHOULD apply and validate / revalidate the new discount.
+- Changing a discount code SHOULD apply and validate the new discount.
 - Discounts SHOULD be revalidated on placing an order.
 
-### Capabilities
+### Supported Discount Types (already modelled)
+
+- **Percentage-based** — e.g. 10% off the order subtotal
+- **Fixed amount** — e.g. £5.00 off the order total
+
+### Future Capabilities (context only — do not build)
+
+> [!IMPORTANT]
+> You are not expected to build these features! They provide context for you to think about as you design your solution.
 
 #### Discount Management
-
-Our growth team wants to be able to manage our discount system. The following is a list of possible future features.
 
 - See a list of active discount codes.
 - See the discount code used on an order.
@@ -46,53 +72,89 @@ Our growth team wants to be able to manage our discount system. The following is
 
 #### Discount Application and Validation
 
-The growth team wants to be able to manage
-
-- How much each discount code applies.
-- Conditions / limits on their use.
-
-The following is a list of possible future features.
-
-- Apply a % based discount - For example 5% off.
-- Apply a fixed price discount - For example £5 off.
-- Apply a conditional discount based on a minimum order value. For example 5% off if you spend more than £50.
-- Apply a conditional discount based on specific products. For example £5 off if you have 2 or more of Product A in your checkout.
+- Apply a conditional discount based on a minimum order value.
+- Apply a conditional discount based on specific products.
 - Limit the number of times a discount code can be used.
 - Limit use of a discount code after an expiry date.
 - Limit use of a discount code for people with a specific email address.
 
-> [!IMPORTANT]
-> To reiterate, you are not expected to build these features! They are there to provide context for you to think about as you design your solution.
+---
 
-## The Task
+## Getting Started
 
-This repo contains a basic checkout frontend app built in React. It also includes a basic checkout API built in Python using the Flask framework.
+### Prerequisites
 
-This basic code is provided for your convenience. Please don't be constrained by this and you are very welcome to change, replace, or discard any parts you see fit.
+- Docker and Docker Compose
+- Node.js 20+ (see `front-end/.nvmrc`)
+- Python 3.12+ (if running the backend locally)
 
-In the issues tab you will find a ticket with the discount feature the team wants to ship next. The objective of this technical assessment is to complete this ticket. **Note that this will require work on both backend and frontend.**
+### Running the Project
 
-You can use any resources you would normally use (e.g. Google Search, StackOverflow, etc). Feel free to reach out if you would like further guidance on the task at any point. This will not negatively impact your assessment.
+```bash
+# Back-end
+cd back-end
+make docker-init
+make docker-dev
 
-### How Long Should I Take?
+# In another terminal:
+make docker-reset-db
+make docker-seed-db
 
-We expect the task to take between 4-6 hours to complete, but please take the time you need to make a solid submission that reflects the extent of your abilities. We would also be happy to see comments / pseudocode for any areas you do not have time to explore. Good luck!
+# Front-end
+cd front-end
+npm install
+npm run dev
+```
+
+### Running Tests
+
+```bash
+# Back-end
+make docker-test
+
+# Front-end
+npm test
+```
+
+### Available Seed Data
+
+The following discount codes are seeded for development:
+
+| Code | Type | Amount | Notes |
+|---|---|---|---|
+| `WELCOME10` | Percentage | 10% off | Active, expires 2030 |
+| `FLAT500` | Fixed | £5.00 off | Active, no expiry |
+| `EXPIRED2024` | Percentage | 15% off | Expired (Jan 2024) |
+| `MAXEDOUT` | Fixed | £3.00 off | Usage limit reached |
+
+The seeded product (Niacinamide-powered night cream) has a unit price of **1999p** (£19.99).
+
+---
+
+## Time Estimate
+
+We expect this assessment to take **4-5 hours**. Please do not spend significantly more than this. If you run out of time, leave comments or pseudocode explaining what you would do next.
+
+## AI Tool Usage
+
+We expect that engineers use AI tools in their daily work. You are welcome to use any AI tools (Copilot, ChatGPT, Claude, Cursor, etc.) during this assessment.
+
+However, you **must**:
+
+1. Disclose which AI tools you used
+2. Briefly describe how you used them (e.g. "used Copilot for autocompletion", "asked ChatGPT to explain SQLAlchemy 2.0 migration")
+3. Add this to a section titled **AI Usage** at the bottom of your `REVIEW.md`
+
+We value engineers who use AI effectively as a tool, not as a replacement for understanding.
 
 ## Further Guidance
 
-Please aim at making a strong submission that reflects well on your knowledge and abilities. This is as much a coding task as it is a system design one. So you know what we are looking for, the following is a list of themes we will use to assess your work.
+Please aim at making a strong submission that reflects well on your knowledge and abilities. The following is a list of themes we will use to assess your work:
 
-- Knowledge and understanding of Python.
-- Knowledge and understanding of frontend development.
-- Knowledge and understanding of relational databases.
-- Understanding of architecture and system design.
-- Clean code and use of standards.
-- Awareness and practice of testing and testability.
-- Your use of version control for example git commit message and pull requests.
-- A clear README on how to start your project, plus any other information you feel is relevant.
-- Comments in your code for anything you want to convey your thought process or what you might do given more time.
-- Consideration given to productionisation.
-- To a lesser extent, we will be considering your knowledge of SQLAlchemy and Flask, but this will not form the majority of the assessment.
+- **Feature completion and code quality** — Working features, follows existing patterns, tested, clean commits
+- **Bug finding and fixing** — Found and fixed issues, wrote tests proving the bugs and verifying fixes
+- **Code review quality** — Identified issues, quality of feedback, constructive tone
+- **AI transparency** — Honest disclosure, specific usage description, evidence of judgment
 
 ## How to Submit
 
@@ -100,4 +162,4 @@ Please aim at making a strong submission that reflects well on your knowledge an
 - Create a private repository in your own GitHub account.
 - Please commit often (and don't squash); this will help us better understand your progress and reasoning.
 - One pull request is sufficient.
-- Add the reviewers as collaborators on your repository on Github.
+- Add the reviewers as collaborators on your repository on GitHub.
