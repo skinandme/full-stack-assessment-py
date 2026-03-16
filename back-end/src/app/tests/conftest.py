@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from flask import Flask
 from flask.testing import FlaskClient
@@ -8,12 +10,10 @@ from app.core.db import db
 
 @pytest.fixture
 def app() -> Flask:
-    app = create_app(
-        {
-            "TESTING": True,
-            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
-        }
-    )
+    overrides = {"TESTING": True}
+    if not os.environ.get("SQLALCHEMY_DATABASE_URI"):
+        overrides["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    app = create_app(overrides)
 
     with app.app_context():
         db.create_all()

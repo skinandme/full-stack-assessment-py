@@ -11,15 +11,15 @@ help: ## Show this help message.
 
 .PHONY: reset-db
 reset-db: ## Reset the local db
-	PYTHONPATH=src FLASK_APP=app:app FLASK_ENV=development flask cli create-db --drop-existing
+	PYTHONPATH=src FLASK_APP=app:app flask cli create-db --drop-existing
 
 .PHONY: seed-db
 seed-db: ## Seed the local db
-	PYTHONPATH=src FLASK_APP=app:app FLASK_ENV=development flask cli seed-db
+	PYTHONPATH=src FLASK_APP=app:app flask cli seed-db
 
 .PHONY: dev
 dev: ## Run the app in development mode
-	PYTHONPATH=src FLASK_APP=app:app FLASK_ENV=development flask run --host 0.0.0.0 --port 9000 --with-threads
+	PYTHONPATH=src FLASK_APP=app:app flask run --host 0.0.0.0 --port 9000 --debug
 
 .PHONY: test
 test: ## Run the tests
@@ -35,7 +35,7 @@ docker-dev: ## Run the project with docker compose
 
 .PHONY: docker-reset-db
 docker-reset-db: ## Reset the database in docker
-	docker compose exec app flask cli create-db --drop-existing 
+	docker compose exec app flask cli create-db --drop-existing
 
 .PHONY: docker-seed-db
 docker-seed-db: ## Seeds the database in docker

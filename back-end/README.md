@@ -1,44 +1,22 @@
 ## Prerequisites
 
-- python 3
+- Python 3.12+
 - bash
 - make
-- optionally - docker and docker compose
+- Docker and Docker Compose (recommended)
 
 ## Quick Start
 
-Use either of the following local or docker instructions
+Use either of the following local or Docker instructions.
 
-### Local
-
-#### Setup
-
-- `python3.10 -m venv .venv` # adjust here and in Dockerfile if you want to use a different version number
-- `source .venv/bin/activate`
-- `pip install -r requirements.txt`
-- `cp .env.example .env`
-- `make reset-db`
-- `make seed-db`
-
-#### Run
-
-- Run `make dev` to start the app server
-- Access the app at `http://localhost:9000`
-  - there is a health check route at `http://localhost:9000/health_checks`
-  - to view available routes run `PYTHONPATH=src FLASK_APP=app:app flask routes`
-
-#### Test
-
-- `make test`
-
-### Docker
+### Docker (recommended)
 
 #### Setup
 
 - Run `make docker-init` to build the container
-- Run `make docker-dev` to start the container
+- Run `make docker-dev` to start the containers (app + PostgreSQL)
 
-In another terminal
+In another terminal:
 
 - Run `make docker-reset-db` to set up the database
 - Run `make docker-seed-db` to seed the database
@@ -52,3 +30,36 @@ In another terminal
 #### Test
 
 - `make docker-test`
+
+### Local
+
+#### Setup
+
+- Ensure PostgreSQL is running on `localhost:5432` (or use Docker: `docker compose up db`)
+- `python3.12 -m venv .venv`
+- `source .venv/bin/activate`
+- `pip install -r requirements.txt`
+- `cp .env.example .env`
+- `make reset-db`
+- `make seed-db`
+
+#### Run
+
+- Run `make dev` to start the app server
+- Access the app at `http://localhost:9000`
+
+#### Test
+
+- `make test`
+
+## API Routes
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/health_checks` | Health check |
+| POST | `/checkouts` | Create a checkout |
+| GET | `/checkouts/<id>` | Get a checkout |
+| POST | `/checkout_items` | Add an item to a checkout |
+| PUT | `/checkout_items/<id>` | Update a checkout item |
+| POST | `/checkouts/<id>/discount` | Apply a discount code |
+| DELETE | `/checkouts/<id>/discount` | Remove a discount (not yet implemented) |

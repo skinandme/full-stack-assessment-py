@@ -17,7 +17,7 @@ export async function createCheckoutItem({
 	productId,
 	quantity,
 }: ICreateCheckoutItem): Promise<ICheckout> {
-	const response = await window.fetch("http://127.0.0.1:9000/checkout_items", {
+	const response = await window.fetch("/api/checkout_items", {
 		method: "POST",
 		headers: {
 			...defaultHeaders,
@@ -28,6 +28,10 @@ export async function createCheckoutItem({
 			quantity,
 		}),
 	});
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(error.error?.message || "Request failed");
+	}
 	return response.json();
 }
 
@@ -36,7 +40,7 @@ export async function updateCheckoutItem({
 	quantity,
 }: IUpdateCheckoutItem): Promise<ICheckout> {
 	const response = await window.fetch(
-		`http://127.0.0.1:9000/checkout_items/${checkoutItemId}`,
+		`/api/checkout_items/${checkoutItemId}`,
 		{
 			method: "PUT",
 			headers: {
@@ -47,5 +51,9 @@ export async function updateCheckoutItem({
 			}),
 		}
 	);
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(error.error?.message || "Request failed");
+	}
 	return response.json();
 }

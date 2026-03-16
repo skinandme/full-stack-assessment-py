@@ -8,7 +8,7 @@ class CheckoutsService:
         self.session = session
 
     def get(self, checkout_id: int) -> Checkout | None:
-        return self.session.query(Checkout).get(checkout_id)
+        return self.session.get(Checkout, checkout_id)
 
     def get_or_raise(self, checkout_id: int) -> Checkout:
         rv = self.get(checkout_id)

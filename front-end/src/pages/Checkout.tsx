@@ -8,7 +8,7 @@ import CheckoutTotals from "../components/organisms/CheckoutTotals/CheckoutTotal
 import Discount from "../components/molecules/Discount/Discount";
 import Button from "../components/atoms/Button";
 import { formatPrice } from "../utils/money";
-import { initialiseCheckout } from "../services/initalise-checkout";
+import { initialiseCheckout } from "../services/initialise-checkout";
 
 export interface ICheckoutPageProps {
 	title: string;
@@ -22,6 +22,8 @@ export default function Checkout({ title }: ICheckoutPageProps) {
 			items: [],
 			sub_total: 0,
 			total: 0,
+			discount_code: null,
+			discount_amount: 0,
 		},
 	};
 
@@ -67,7 +69,7 @@ export default function Checkout({ title }: ICheckoutPageProps) {
 						},
 						{
 							label: "Discount total",
-							amount: formatPrice({ amount: 0, currency: checkout.currency }),
+							amount: formatPrice({ amount: checkout.discount_amount, currency: checkout.currency }),
 						},
 						{
 							label: "Total",

@@ -1,13 +1,32 @@
-version: "3"
 services:
+  db:
+    image: postgres:16-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skinandme"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+    environment:
+      POSTGRES_USER: skinandme
+      POSTGRES_PASSWORD: skinandme
+      POSTGRES_DB: skinandme
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   app:
     container_name: skinandme-tech-test-app
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      - SQLALCHEMY_DATABASE_URI=sqlite:///app.db
+      - SQLALCHEMY_DATABASE_URI=postgresql://skinandme:skinandme@db:5432/skinandme
+    depends_on:
+      db:
+        condition: service_healthy
     volumes:
-      - ./src:/src
+      - ./src:/app/src
     ports:
       - "127.0.0.1:9000:9000"
+volumes:
+  pgdata:
