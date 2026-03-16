@@ -44,6 +44,8 @@ def test_get_empty_checkout(client: FlaskClient, session: Session, checkout: Che
     assert res.json["currency"] == "GBP"
     assert res.json["items"] == []
     assert res.json["sub_total"] == 0
+    assert res.json["discount_code"] is None
+    assert res.json["discount_amount"] == 0
 
 
 def test_get_checkout_with_items(

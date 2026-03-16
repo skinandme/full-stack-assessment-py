@@ -8,12 +8,16 @@ interface ICreateCheckout {
 export async function createCheckout({
 	currency,
 }: ICreateCheckout): Promise<ICheckout> {
-	const response = await window.fetch("http://127.0.0.1:9000/checkouts", {
+	const response = await window.fetch("/api/checkouts", {
 		method: "POST",
 		body: JSON.stringify({ currency }),
 		headers: {
 			...defaultHeaders,
 		},
 	});
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(error.error?.message || "Request failed");
+	}
 	return response.json();
 }

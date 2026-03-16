@@ -5,6 +5,7 @@ from flask.cli import with_appcontext
 
 from app.core.db import db
 from app.cli.seeds import products
+from app.cli.seeds import discounts
 from logging import Logger
 
 logger = Logger(__name__)
@@ -18,6 +19,7 @@ def create_cli_blueprint() -> Blueprint:
     def create_db_command(drop_existing: bool):
         from app.api.checkouts import models
         from app.api.products import models
+        from app.api.discounts import models
 
         if drop_existing:
             db.drop_all()
@@ -32,6 +34,16 @@ def create_cli_blueprint() -> Blueprint:
                 db.session.commit()
             except (OperationalError, IntegrityError) as e:
                 logger.error(f"\nIGNORING EXCEPTION: \n\n{e}")
+                db.session.rollback()
+                continue
+
+        for discount in discounts.data:
+            try:
+                db.session.add(discount)
+                db.session.commit()
+            except (OperationalError, IntegrityError) as e:
+                logger.error(f"\nIGNORING EXCEPTION: \n\n{e}")
+                db.session.rollback()
                 continue
 
     return bp

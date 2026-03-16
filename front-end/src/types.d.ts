@@ -18,4 +18,6 @@ export interface ICheckout {
 	items: ICheckoutItem[];
 	sub_total: number;
 	total: number;
+	discount_code: string | null;
+	discount_amount: number;
 }
