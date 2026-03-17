@@ -16,7 +16,7 @@ Your task is outlined below.
 
 The discount system has some issues and missing pieces. This task combines a code review, bug fixes, and feature completion.
 
-**Code review:** A specific commit has been made to this repository containing the initial implementation of the discount system. Review that commit as you would a real PR — the commit ID is provided separately.
+**Code review:** A specific commit has been made to this repository containing the initial implementation of the discount system. Review that commit as you would a real PR — the commit ID is `27244c2` (also noted in `REVIEW.md`).
 
 Fill in `REVIEW.md` at the repository root with your feedback. Reference file paths and line numbers to identify issues. For each issue you identify, explain:
 
@@ -24,7 +24,7 @@ Fill in `REVIEW.md` at the repository root with your feedback. Reference file pa
 - Why it matters
 - How you would fix it
 
-**Bug fixes:** The existing discount implementation has bugs. Find them and fix them. Write tests that demonstrate the bugs and verify your fixes.
+**Bug fixes:** The issues you identify in your review (and any others you find) should be fixed in code. Write tests that demonstrate the bugs and verify your fixes.
 
 **Feature completion:**
 
