@@ -43,4 +43,4 @@ docker-seed-db: ## Seeds the database in docker
 
 .PHONY: docker-test
 docker-test: ## Run the tests in docker
-	docker compose run --rm app pytest
+	docker compose run --rm -e SQLALCHEMY_DATABASE_URI=sqlite:///:memory: app pytest
