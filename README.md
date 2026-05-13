@@ -137,9 +137,9 @@ We expect this assessment to take **4-5 hours**. Please do not spend significant
 
 ## AI Tool Usage
 
-We expect that engineers use AI tools in their daily work. You are welcome to use any AI tools (Copilot, ChatGPT, Claude, Cursor, etc.) during this assessment.
+We use and value AI in our daily work. As such, evaluating the way you use AI is also a part of this assignment. We are not prescriptive in the way that we expect you to use these tools, and you are welcome to use any Agents and Models as you see fit (including Copilot, Codex, Claude Code, Cursor, etc.)
 
-However, you **must**:
+To complete the task you must:
 
 1. Disclose which AI tools you used
 2. Briefly describe how you used them (e.g. "used Copilot for autocompletion", "asked ChatGPT to explain SQLAlchemy 2.0 migration")
